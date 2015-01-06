@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<ul>
+	{% for product in all_products %} <!-- Takes the all_products variable from products.views -->
+		<li>{{ product.title }} {{product.price}}</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
