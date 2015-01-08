@@ -83,6 +83,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "media") # This is the directory that all image uploads will get sent to
+#MEDIA_ROOT = '/home/david/projects/ecommerce/static/media/'
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static_root") #Lecture 51: This is where all of the static files get collected
+STATICFILES_DIRS = (
+        os.path.join(os.path.dirname(BASE_DIR), "static", "static_files"),
+)
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'static', 'templates'),

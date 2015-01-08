@@ -18,7 +18,7 @@ def home(request):
 
 # This method creates a view that takes every instance of the Product model
 def all(request):
-	products = Product.objects.all()
-	context = {'all_products': products} # This takes all of the objects
+	products = Product.objects.all() # Each object in products is stored in variable products
+	context = {'all_products': products} # This takes all of the objects and associates them with a dictionary key 
 	template = 'products/all.html'
 	return render(request, template, context)
