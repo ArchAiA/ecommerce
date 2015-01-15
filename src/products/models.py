@@ -1,3 +1,4 @@
+#L55 Denigrated: from django.core.urlresolvers import reverse
 from django.db import models
 
 # Create your models here.
@@ -8,7 +9,7 @@ class Product(models.Model):
 	price = models.DecimalField(decimal_places=2, max_digits=100, default=29.99)
 	sale_price = models.DecimalField(decimal_places=2, max_digits=100,\
 										null=True, blank=True)
-	slug = models.SlugField() # A Slug Field will create urls from the title
+	slug = models.SlugField(unique=True) # A Slug Field will create urls from the title
 	active = models.BooleanField(default=True)
 
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False) # First added to database
@@ -18,9 +19,14 @@ class Product(models.Model):
 	def __unicode__(self): # Every time we save the instance it will return the title as unicode
 		return self.title
 
+	class Meta:
+		unique_together = ('title', 'slug')
+
 	def get_price(self):
 		return self.price
 
+#L55 Denigrated:	def get_absolute_url(self):
+#L55 Denigrated:		return reverse("single_product", kwargs={"slug": self.slug})
 
 
 class ProductImage(models.Model):

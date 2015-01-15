@@ -22,8 +22,10 @@ alert("Welcome");
 
 
 
-{% block content %}
 
+
+{% block jumbotron %}
+<div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Hello {{ username_is }}</h1>
@@ -34,4 +36,47 @@ alert("Welcome");
           <a class="btn btn-lg btn-primary" href="http://getbootstrap.com/components/#navbar" role="button">View navbar docs &raquo;</a>
         </p>
       </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+{% block content %}
+<div class='row'>
+    {% for product in products %}
+      <div class="col-sm-4">
+
+      
+
+      {% for item in product.productimage_set.all %} <!-- So what we are getting is model.modelnamewithforeignkey_set.all -->
+        {% if item.featured %}
+          <img src="{{MEDIA_URL}}{{item.image}}"/>
+        {% endif %}
+        
+      {% endfor %}
+      
+      <!-- Eliminated in L54
+      {{product.slug}}
+      {{product.id}}
+      -->
+
+      <!--Added in L54 - Hyperlink for product.title to pass product.slug 
+      and we do this by using a django url argument that passes the name listed in the products.url, and also passing product.slug as an argument
+      -->
+      <a href='{% url "single_product" product.slug %}'>{{product.title}}</a>
+      {{product.price}}
+
+      <!-- L55: ALTERNATIVE WAY OF URL ROUTING AS ABOVE
+      <a href='{{ product.get_absolute_url}}'>{{product.title}}</a>
+      -->
+    
+      </div>
+      {% cycle "" "" "</div><br /><hr><div class='row'>" %}
+    {% endfor %}
+
+</div>
 {% endblock %}

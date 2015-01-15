@@ -10,10 +10,12 @@
 
     <title>{% block head_title %}{% endblock %}CFE Store</title>
 
+    <!-- Lecture 51 - Loading Static Files -->
+    {% load staticfiles %}
+    <link rel='stylesheet' href='{% static "css/bootstrap.min.css" %}' />
+    <link rel='stylesheet' href='{% static "css/bootstrap-theme.min.css" %}' />
+    <!-- Lecture 51 - Loading Static Files -->
 
-{% load staticfiles %}
-<link rel='stylesheet' href='{% static "css/bootstrap.min.css" %}' />
-<link rel='stylesheet' href='{% static "css/bootstrap-theme.min.css" %}' />
 
 <!-- commented out for move to static_files directory -->
 <!-- Notice that after we move the files to the static_files/css folder we do not need to do anything more.  The css files automatically are searched for in the specified STATICFILES_DIR folder -->
@@ -53,7 +55,9 @@
   <body>
 
   {% include 'navbar.html' %}
-
+    
+      {% block jumbotron %}
+      {% endblock %}
 
     <div class="container">
       {% block content %}
