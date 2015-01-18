@@ -6,8 +6,18 @@
 
 <div class='col-sm-8 col-sm-offset-2'>
 <table class='table'>
-	<thead><th>Item</th><th>Price</th></thead>
-	<tfoot><tr><td></td><td>Total: {{cart.total}}</td></tr></tfoot>
+	<thead>
+		<th>Item</th>
+		<th>Price</th>
+		<th></th>
+	</thead>
+	<tfoot>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>Total: {{cart.total}}</td>
+		</tr>
+	</tfoot>
 	
 	{% for item in cart.products.all %}
 	<tr>
