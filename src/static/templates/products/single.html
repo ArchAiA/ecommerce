@@ -1,29 +1,54 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
 
-
+<div class="page-header">
+  <h1>{{product.title}}</h1>
+</div>
 
 {% block content %}
-<h1>{{product.title}}</h1>
 
+<!--L58: Fleshing Out The Single Page -->
+<!--Notice that we have 1 major container div [class='row'], and within that div we have two
+	smaller divs.  One takes the 4 left columns, and the other takes the remaining 8 columns
+	These are the [class='col-sm-4'], and [class='col-sm-8'] divs respectively -->
+
+
+<div class='row'>
+	<div class='col-sm-4'>
+<!--L58: Fleshing Out The Single Page -->
+<!-- DELETED: L58 <h1>{{product.title}}</h1> -->
 <!--L56: Adding images loop -->
 	{% for img in images %}
 		{% if img.featured %}
-		<div class="col-xs-12 col-md-6">-->
-		<h1>Featured</h1>
-		<img class='img-responsive' src="{{MEDIA_URL}}{{img.image}}" />
+		<div class="col-xs-12">
+		<img class='img-responsive' src="{{MEDIA_URL}}{{img.image}}" >
+		<hr />
 		</div>
-		{% else %}
-
-		<div class="col-xs-6 col-md-3">
+		{% endif %}
+	{% endfor %}
+		
+	{% for img in images %}
+		{% if not img.featured %}
+		<div class="col-xs-6">
 		<a href="#" class="thumbnail">
-			<img class='img-responsive' src="{{ MEDIA_URL }}{{ img.image }}" />
+			<img class='img-responsive' src="{{ MEDIA_URL }}{{ img.image }}" >
 		</a>
 		</div>
 		{% endif %}
-
 	{% endfor %}
 <!--L56: Adding images loop -->
+<!-- L58 -->
+	</div>
+
+	<div class='col-sm-8'>
+		<h1>{{product.title}} <a href='#' class='pull-right'>Add to Cart</a></h1>
+		<hr />
+		Price: {{product.price}}<br />
+		Shipping: Free
+		<hr />
+		{{product.description|linebreaks}}
+	</div>
 
 
+</div>
+<!-- L58 -->
 {% endblock %}
