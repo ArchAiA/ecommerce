@@ -40,7 +40,8 @@
 	</div>
 
 	<div class='col-sm-8'>
-		<h1>{{product.title}} <a href='#' class='pull-right'>Add to Cart</a></h1>
+		<!--Updated in L60: The anchor for add to cart now references the update_cart view and send product.slug as an argument-->
+		<h1>{{product.title}} <a href='{% url "update_cart" product.slug %}' class='pull-right'>Add to Cart</a></h1> 
 		<hr />
 		Price: {{product.price}}<br />
 		Shipping: Free
