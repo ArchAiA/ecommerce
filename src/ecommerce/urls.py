@@ -19,6 +19,9 @@ urlpatterns = patterns('',
     #(?P<all_items>.*)
     #(?P<id>\d+)
     #You can chain the regex components above together (ex. manufacturer, model) if you also change the number of arguments that the view passes as well
+
+    #L57: Add /s/ url for searches
+    url(r'^s/$', 'products.views.search', name='search')
 ) 
 
 if settings.DEBUG: #Lecture 51: If DEBUG is True, then serve these static files

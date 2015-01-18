@@ -1,0 +1,17 @@
+<!--L57: Adding Search -->
+
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<h1>Searched For: {{query}}</h1>
+
+
+{% for product in products %}
+	<a href="{% url 'single_product' product.slug %}">{{product.title}}</a><br />
+{% endfor %}
+
+
+{% endblock %}
+<!--L57: Adding Search -->

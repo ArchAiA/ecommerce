@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block head_title %}
 Welcome to
@@ -50,31 +51,28 @@ alert("Welcome");
     {% for product in products %}
       <div class="col-sm-4">
 
-      
+        <div class="thumbnail">
+        {% if product.productimage_set.all %}
 
-      {% for item in product.productimage_set.all %} <!-- So what we are getting is model.modelnamewithforeignkey_set.all -->
-        {% if item.featured %}
-          <img src="{{MEDIA_URL}}{{item.image}}"/>
+          {% for item in product.productimage_set.all %}
+          {% if item.featured %}
+           <img class="img-responsive" src="{{MEDIA_URL}}{{item.image}}"/>
+          {% endif %}
+          {% endfor %}
+
+        {% else %}
+        <img class="img-responsive" src="{% static 'img/placeholder.svg' %}" />
         {% endif %}
-        
-      {% endfor %}
+
+          <div class="caption">
+          <a href="{% url 'single_product' product.slug %}"><h3>{{product.title}}</h3></a>
+          <p>{{product.description|truncatewords:15}}</p>
+          <p><a href="{% url 'single_product' product.slug %}" class="btn btn-primary" role="button">View</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+          </div>
+        </div>
       
-      <!-- Eliminated in L54
-      {{product.slug}}
-      {{product.id}}
-      -->
-
-      <!--Added in L54 - Hyperlink for product.title to pass product.slug 
-      and we do this by using a django url argument that passes the name listed in the products.url, and also passing product.slug as an argument
-      -->
-      <a href='{% url "single_product" product.slug %}'>{{product.title}}</a>
-      {{product.price}}
-
-      <!-- L55: ALTERNATIVE WAY OF URL ROUTING AS ABOVE
-      <a href='{{ product.get_absolute_url}}'>{{product.title}}</a>
-      -->
-    
       </div>
+
       {% cycle "" "" "</div><br /><hr><div class='row'>" %}
     {% endfor %}
 
