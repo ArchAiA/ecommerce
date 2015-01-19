@@ -1,3 +1,4 @@
+#L60: Creating a Cart
 from django.contrib import admin
 
 # Register your models here.
@@ -8,3 +9,4 @@ class CartAdmin(admin.ModelAdmin):
 		model = Cart
 
 admin.site.register(Cart, CartAdmin)
+#L60: Creating a Cart
