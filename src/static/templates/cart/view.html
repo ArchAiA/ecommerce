@@ -12,10 +12,11 @@
 
 
 {% else %}
-<table class='table'>
+<table style='text-align: left' class='table'>
 	<thead>
 		<th>Item</th>
 		<th>Price</th>
+		<th>Qty</th>
 		<th></th>
 	</thead>
 	<tfoot>
@@ -26,11 +27,12 @@
 		</tr>
 	</tfoot>
 	
-	{% for item in cart.products.all %}
+	{% for item in cart.cartitem_set.all %}
 	<tr>
-		<td>{{item}}</td>
-		<td>{{item.price}}</td>
-		<td><a href="{% url 'update_cart' item.slug %}">Remove</a>
+		<td>{{item.product}}</td>
+		<td>{{item.product.price}}</td>
+		<td>{{item.quantity}}</td>
+		<td><a href="{% url 'update_cart' item.product.slug %}">Remove</a>
 	</tr>
 	{% endfor %}
 

@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 # Create your views here.
 from products.models import Product
-from .models import Cart
+from .models import Cart, CartItem
 
 def view(request):
 #L61: When you want to view the cart this will first check if the_id exists
@@ -27,21 +27,22 @@ def view(request):
 
 
 
-def update_cart(request, slug):
+def update_cart(request, slug, qty):
 	#L61: Eliminated: cart = Cart.objects.all()[0]
 
 #L61: Using unique sessions to manage carts
 	request.session.set_expiry(1800)
+#L61: Check to see if cart_id exists, and create cart_id if it does not exist
 	try:
 		the_id = request.session['cart_id'] #L61: If cart_id exists, use it, else create cart_id
 	except:
-		new_cart = Cart() #L61: Create cart_id if it does not exist
-		new_cart.save()
-		request.session['cart_id'] = new_cart.id
+		new_cart = Cart() #new_cart is a new instand of Cart()
+		new_cart.save() #Save instance new_cart
+		request.session['cart_id'] = new_cart.id #Set the session value for key 'cart_id' to new_cart.id
 		the_id = new_cart.id
+#L61: Check to see if cart_id exists, and create cart_id if it does not exist
 
 	cart = Cart.objects.get(id=the_id) #L61: take all of the objects in the instance of cart where the cart id = the_id
-
 
 	try:
 		product = Product.objects.get(slug=slug)
@@ -49,19 +50,35 @@ def update_cart(request, slug):
 		pass
 	except:
 		pass
-	if not product in cart.products.all(): #If the item is not in the cart add it
-		cart.products.add(product)
-	else:
-		cart.products.remove(product) #Else remove the item
+
+	cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product) #L62: Creates a tuple that returns ("cart item object", "True/False")
+	if created: 
+		print "yeah"
+
+	if qty == 0:
+		cart_item.delete()
+	else: 
+		cart_item.quantity = qty
+		cart_item.save()
+
+# L64: This is no longer needed because adding cart=cart to teh cart_item assignment
+# 	  makes this unnecessary
+# 	if not cart_item in cart.items.all(): #If the item is not in the cart add it
+# 		cart.items.add(cart_item)
+# 	else:
+# 		cart.items.remove(cart_item) #Else remove the item
+# L64: This is no longer needed because adding cart=cart to teh cart_item assignment
 
 	new_total = 0.00
-	for item in cart.products.all():
-		new_total += float(item.price)
+	for item in cart.cartitem_set.all(): #L64: This ...
+		line_total = float(item.product.price) * item.quantity
+		new_total += line_total
+
+	request.session['items_total'] = cart.cartitem_set.count()
 	cart.total = new_total
 	cart.save()
 
-	request.session['items_total'] = cart.products.count()
-	print cart.products.count()
+	print cart.cartitem_set.count()
 
 	return HttpResponseRedirect(reverse("cart")) #After any cart is updated the user will be redirected to the entry in urls.py with name="cart"
 #L60: Creating a Cart
