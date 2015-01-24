@@ -41,7 +41,15 @@
 
 	<div class='col-sm-8'>
 		<!--Updated in L60: The anchor for add to cart now references the update_cart view and send product.slug as an argument-->
-		<h1>{{product.title}} <a href='{% url "update_cart" product.slug %}' class='pull-right'>Add to Cart</a></h1> 
+		<h1>{{product.title}} 
+
+			<a href='{% url "update_cart" product.slug %}?qty=1' class='pull-right'>Add to Cart</a>
+		</h1> 
+		<form class = 'form pull-right' method='GET' action='{% url "update_cart" product.slug %}'>
+			<input name='qty' type='number' value='1' />
+			<input name='attr' type='text' placeholder='color' /> 
+			<input type='submit' value='Add To Cart' />
+		</form>
 		<hr />
 		Price: {{product.price}}<br />
 		Shipping: Free

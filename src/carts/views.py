@@ -27,7 +27,26 @@ def view(request):
 
 
 
-def update_cart(request, slug, qty):
+def update_cart(request, slug):
+
+#L65: Adding quantities to the add to cart
+	try:
+		qty = request.GET.get('qty')
+		update_qty = True
+	except:
+		qty = None
+		update_qty = False
+	
+	try:
+		attr = request.GET.get("attr")
+	except:
+		attr = None
+
+	print attr
+#L65: Adding quantities to the add to cart
+
+
+
 	#L61: Eliminated: cart = Cart.objects.all()[0]
 
 #L61: Using unique sessions to manage carts
@@ -42,7 +61,7 @@ def update_cart(request, slug, qty):
 		the_id = new_cart.id
 #L61: Check to see if cart_id exists, and create cart_id if it does not exist
 
-	cart = Cart.objects.get(id=the_id) #L61: take all of the objects in the instance of cart where the cart id = the_id
+	cart = Cart.objects.get(id=the_id) #L61: Set cart equal to the instance of Cart where id=the_id
 
 	try:
 		product = Product.objects.get(slug=slug)
@@ -51,15 +70,19 @@ def update_cart(request, slug, qty):
 	except:
 		pass
 
+	#cart_item (a cart, and item combination) is equal to an objtect in CartItem where cart = cart, and product = product
 	cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product) #L62: Creates a tuple that returns ("cart item object", "True/False")
 	if created: 
 		print "yeah"
 
-	if qty == 0:
-		cart_item.delete()
-	else: 
-		cart_item.quantity = qty
-		cart_item.save()
+	if update_qty and qty:
+		if int(qty) == 0:
+			cart_item.delete()
+		else:
+			cart_item.quantity = qty
+			cart_item.save()
+	else:
+		pass
 
 # L64: This is no longer needed because adding cart=cart to teh cart_item assignment
 # 	  makes this unnecessary

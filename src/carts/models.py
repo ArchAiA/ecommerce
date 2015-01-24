@@ -26,7 +26,9 @@ class Cart(models.Model):
 
 	#L63: Adding Quantities to Cart App 
 	#items = models.ManyToManyField(CartItem, null=True, blank=True)
-	#products = models.ManyToManyField(Product, null=True, blank=True)
+	#If you use ForeignKey with products, then you can only put one product in the cart
+	#If you use ManyToMany instead, you can put multiple items in the cart
+	#products = models.ForeignKey(Product, null=True, blank=True) #This is a ManyToMany field because the variable products will hold multiple values, each of which will be an instance of Product
 	#L63: Adding Quantities to Cart App
 
 	total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
