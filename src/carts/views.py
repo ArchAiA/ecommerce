@@ -36,13 +36,21 @@ def update_cart(request, slug):
 	except:
 		qty = None
 		update_qty = False
-	
-	try:
-		attr = request.GET.get("attr")
-	except:
-		attr = None
 
-	print attr
+
+	notes = {}
+	try:
+		color = request.GET.get("color")
+		notes['color'] = color
+	except:
+		color = None
+
+	try:
+		size = request.GET.get("size")
+		notes['size'] = size
+	except:
+		size = None		
+
 #L65: Adding quantities to the add to cart
 
 
@@ -80,6 +88,7 @@ def update_cart(request, slug):
 			cart_item.delete()
 		else:
 			cart_item.quantity = qty
+			cart_item.notes = notes
 			cart_item.save()
 	else:
 		pass
