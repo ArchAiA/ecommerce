@@ -39,3 +39,17 @@ class ProductImage(models.Model):
 
 	def __unicode__(self):
 		return self.product.title
+
+
+class Variation(models.Model):
+
+	product = models.ForeignKey(Product)
+	title = models.CharField(max_length=120)
+	image = models.ForeignKey(ProductImage, null=True, blank=True)
+	price = models.DecimalField(max_digits=100, decimal_places=2, null=True, blank=True)
+	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+	active = models.BooleanField(default=True)
+	
+	def __unicode__(self):
+		return self.title
+

@@ -7,8 +7,17 @@ from products.models import Product
 #L63: Adding Quantities to Cart App 
 class CartItem(models.Model):
 	#L64: Fixing Cart
+	#This creates a foreign key in the CartItem table that has the cart.id or product.id in a field
+	#in that field in the CartItem table.  
+	#What this does for products is that it creates a new record/row for each 
+	#EACH CARTITEM HAS A UNIQUE ID, HOWEVER The PRODUCT IDS and CART IDS that 
+	#ARE PULLED INTO THE TABLE (AND ARE ASSOCIATED WITH EACH CART ITEM) CAN BE DUPLICATED IN THE COLUMNS.
+	
+	#SO CART ITEM IDS ARE ALWAYS UNIQUE.  EACH NEW CART ITEM HAS A CART ID, AND A PRODUCT ID
+	#ASSOCIATED WITH IT.  
 	cart = models.ForeignKey('Cart', null=True, blank=True) #This comes from the Cart class
 	product = models.ForeignKey(Product, null=True, blank=True) #This comes from prdocuts.Product class
+	
 	quantity = models.IntegerField(default=1)
 	line_total = models.DecimalField(default=10.99, max_digits=1000, decimal_places=2)
 	notes = models.TextField(null=True, blank=True)
@@ -17,7 +26,7 @@ class CartItem(models.Model):
 
 	def __unicode__(self):
 		try:
-			return str(self.cart.id)
+			return str(self.id)
 		except:
 			return self.product.title	 
 #L63: Adding Quantities to Cart App 
