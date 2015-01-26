@@ -41,6 +41,7 @@ class Migration(SchemaMigration):
         # Adding model 'Variation'
         db.create_table(u'products_variation', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('category', self.gf('django.db.models.fields.CharField')(default='size', max_length=120)),
             ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=120)),
             ('image', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.ProductImage'], null=True, blank=True)),
@@ -92,6 +93,7 @@ class Migration(SchemaMigration):
         u'products.variation': {
             'Meta': {'object_name': 'Variation'},
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'category': ('django.db.models.fields.CharField', [], {'default': "'size'", 'max_length': '120'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['products.ProductImage']", 'null': 'True', 'blank': 'True'}),
             'price': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '100', 'decimal_places': '2', 'blank': 'True'}),

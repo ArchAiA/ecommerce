@@ -54,17 +54,34 @@
 				<input class='btn btn-default btn-block' type='submit' value='Add to Cart' />
 				<input class='form-control' name='qty' type='number' value='1' />
 				<!-- Eliminated in L65 <input class='form-control' name='attr' type='text' placeholder='color' /> -->
+
+
+				<!--L67: ELIMINATED
 				<select class='form-control' name='color'>
 					<option value='red'>Red</option>
 					<option value='green'>Green</option>
 					<option value='black'>Black</option>
 					<option value='blue'>Blue</option>
 				</select>
+				-->
+
+				<!--L67: Added a loop through variations to get dropdown options -->
+				{% if product.variation_set.sizes %}
 				<select class='form-control' name='size'>
-					<option value='sm'>Small</option>
-					<option value='md'>Medium</option>
-					<option value='lg'>Large</option>
+					{% for item in product.variation_set.sizes %}
+						<option value='{{item.title|lower}}'>{{ item.title }}</option>
+					{% endfor %}
 				</select>
+				{% endif %}
+
+				{% if product.variation_set.trims %}
+				<select class='form-control' name='trim'>
+					{% for item in product.variation_set.trims %}
+						<option value='{{item.title|lower}}'>{{ item.title }}</option>
+					{% endfor %}
+				</select>
+				{% endif %}
+				<!--L67: Added a loop through variations to get dropdown options -->
 
 			</form>
 		</div>
