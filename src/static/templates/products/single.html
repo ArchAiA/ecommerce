@@ -6,17 +6,9 @@
 
 {% block content %}
 
-<!--L58: Fleshing Out The Single Page -->
-<!--Notice that we have 1 major container div [class='row'], and within that div we have two
-	smaller divs.  One takes the 4 left columns, and the other takes the remaining 8 columns
-	These are the [class='col-sm-4'], and [class='col-sm-8'] divs respectively -->
-
 
 <div class='row'>
 	<div class='col-sm-4'>
-<!--L58: Fleshing Out The Single Page -->
-<!-- DELETED: L58 <h1>{{product.title}}</h1> -->
-<!--L56: Adding images loop -->
 	{% for img in images %}
 		{% if img.featured %}
 		<div class="col-xs-12">
@@ -35,17 +27,14 @@
 		</div>
 		{% endif %}
 	{% endfor %}
-<!--L56: Adding images loop -->
-<!-- L58 -->
+
 	</div>
 
 	<div class='col-sm-8'>
 		<div class='col-sm-8 pull-left'>
-			<!--Updated in L60: The anchor for add to cart now references the update_cart view and send product.slug as an argument-->
+
 			<h1>{{product.title}} 
-			<!--L65: Adding Color Dropdown - Eliminated old add to cart
-			<a href='{% url "update_cart" product.slug %}?qty=1' class='pull-right'>Add to Cart</a>
-			L65: Adding Color Dropdown - Eliminated old add to cart -->
+
 			</h1> 
 		</div>
 
@@ -53,19 +42,7 @@
 			<form class = 'form pull-right' method='GET' action='{% url "update_cart" product.slug %}'>
 				<input class='btn btn-default btn-block' type='submit' value='Add to Cart' />
 				<input class='form-control' name='qty' type='number' value='1' />
-				<!-- Eliminated in L65 <input class='form-control' name='attr' type='text' placeholder='color' /> -->
 
-
-				<!--L67: ELIMINATED
-				<select class='form-control' name='color'>
-					<option value='red'>Red</option>
-					<option value='green'>Green</option>
-					<option value='black'>Black</option>
-					<option value='blue'>Blue</option>
-				</select>
-				-->
-
-				<!--L67: Added a loop through variations to get dropdown options -->
 				{% if product.variation_set.sizes %}
 				<select class='form-control' name='size'>
 					{% for item in product.variation_set.sizes %}
@@ -81,8 +58,6 @@
 					{% endfor %}
 				</select>
 				{% endif %}
-				<!--L67: Added a loop through variations to get dropdown options -->
-
 			</form>
 		</div>
 		
@@ -101,5 +76,4 @@
 
 
 </div>
-<!-- L58 -->
 {% endblock %}
